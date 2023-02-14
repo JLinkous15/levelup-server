@@ -1,5 +1,4 @@
 from django.db import models
-from models import Gamer, Event
 
 class Attendance(models.Model):
 
