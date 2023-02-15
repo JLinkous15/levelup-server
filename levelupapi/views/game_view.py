@@ -24,7 +24,7 @@ class GameView(ViewSet):
     def create(self, request):
         game_type = GameType.objects.get(pk=request.data["game_type"])
 
-        game=Game.objects.create(
+        game = Game.objects.create(
             name = request.data['name'],
             description = request.data['description'],
             game_type = game_type,
