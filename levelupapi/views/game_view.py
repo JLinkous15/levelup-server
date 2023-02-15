@@ -22,6 +22,6 @@ class GameView(ViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class GameSerializer(serializers.ModelSerializer):
-    class Meta():
+    class Meta:
         model = Game
         fields = ('id','name','description','game_type','creator', 'number_of_players','skill_level')
