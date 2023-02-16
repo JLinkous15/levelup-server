@@ -35,6 +35,22 @@ class GameView(ViewSet):
         serializer = GameSerializer(game)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+    def update(self, request, pk):
+        """Handles PUT requests to games"""
+        game = Game.objects.get(pk=pk)
+        game.description=request.data["description"]
+        game.creator=request.data["creator"]
+        game.number_of_players=request.data["number_of_players"]
+        game.skill_level=request.data["skill_level"]
+        game.name=request.data["name"]
+        
+        game_type=GameType.objects.get(pk=request.data['game_type'])
+        game.game_type = game_type
+
+        game.save()
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
