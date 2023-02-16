@@ -8,3 +8,11 @@ class Event(models.Model):
     attendance = models.ManyToManyField("Gamer", through="Attendance")
     date = models.DateTimeField()
     location = models.CharField(max_length=100)
+
+    @property
+    def is_host(self):
+        return self.__host
+
+    @is_host.setter
+    def is_host(self, value):
+        self.__host=value

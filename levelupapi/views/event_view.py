@@ -4,7 +4,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from levelupapi.models import Event, Game, Gamer
-import datetime
+
 
 class EventView(ViewSet):
     
@@ -13,7 +13,10 @@ class EventView(ViewSet):
         Returns a Response instance containing the Event and a status code of 200"""
         
         events = Event.objects.all()
-
+        for event in events:
+            event.is_host = False
+            if event.host.user == request.auth.user:
+                event.is_host = True
         if "game" in request.query_params:
             game_obj = Game.objects.get(pk=request.query_params['game'])
             events = events.filter(game = game_obj)
@@ -69,4 +72,4 @@ class EventSerializer(serializers.ModelSerializer):
     attendance = EventGamerSerializer(many=True)
     class Meta:
         model = Event
-        fields = ('id','host','game','attendance','date','location')
+        fields = ('id','host','game','attendance','date','location', 'is_host')
