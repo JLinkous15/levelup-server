@@ -56,6 +56,11 @@ class EventView(ViewSet):
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
 
+    def destroy(self, request, pk):
+        event = Event.objects.get(pk=pk)
+        event.delete()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
         
 class EventGameSerializer(serializers.ModelSerializer):
     class Meta:
@@ -65,7 +70,7 @@ class EventGameSerializer(serializers.ModelSerializer):
 class EventGamerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Gamer
-        fields = ('id','full_name')
+        fields = ('id','full_name','bio')
 
 class EventSerializer(serializers.ModelSerializer):
     host = EventGamerSerializer(many=False)
