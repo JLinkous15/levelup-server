@@ -4,6 +4,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from levelupapi.models import Event, Game, Gamer
+from rest_framework.decorators import action
 
 
 class EventView(ViewSet):
@@ -11,9 +12,10 @@ class EventView(ViewSet):
     def list(self, request):
         """Handles GET requests for a single event based on the primary key
         Returns a Response instance containing the Event and a status code of 200"""
-        
+        gamer = Gamer.objects.get(user=request.auth.user)
         events = Event.objects.all()
         for event in events:
+            event.joined = gamer in event.attendance.all()
             event.is_host = False
             if event.host.user == request.auth.user:
                 event.is_host = True
@@ -61,6 +63,22 @@ class EventView(ViewSet):
         event.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
 
+    @action(methods=['post'], detail=True)
+    def signup(self, request, pk):
+        """Post request for a user to sign up for an event"""
+        gamer = Gamer.objects.get(user=request.auth.user)
+        event = Event.objects.get(pk=pk)
+        event.attendance.add(gamer)
+        return Response({'message': 'Gamer added'}, status=status.HTTP_201_CREATED)
+    
+    @action(methods=['delete'], detail=True)
+    def leave(self, request, pk):
+        gamer = Gamer.objects.get(user=request.auth.user)
+        event = Event.objects.get(pk=pk)
+        event.attendance.remove(gamer)
+        return Response({'message':'gamer removed'}, status=status.HTTP_204_NO_CONTENT)
+
+
         
 class EventGameSerializer(serializers.ModelSerializer):
     class Meta:
@@ -78,4 +96,4 @@ class EventSerializer(serializers.ModelSerializer):
     attendance = EventGamerSerializer(many=True)
     class Meta:
         model = Event
-        fields = ('id','host','game','attendance','date','location', 'is_host')
+        fields = ('id','host','game','attendance','date','location', 'is_host', 'joined')
