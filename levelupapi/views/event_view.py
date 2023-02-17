@@ -48,7 +48,8 @@ class EventView(ViewSet):
     def update(self, request, pk):
         """Handles PUT requests to /events/pk"""
         event = Event.objects.get(pk=pk)
-        event.game = Game.objects.get(pk = request.data['game'])
+        game = Game.objects.get(pk = request.data['game'])
+        event.game=game
         event.date = request.data['date']
         event.location = request.data['location']
         event.save()
