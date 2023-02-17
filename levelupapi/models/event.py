@@ -16,3 +16,11 @@ class Event(models.Model):
     @is_host.setter
     def is_host(self, value):
         self.__host=value
+
+    @property
+    def joined(self):
+        return self.__joined
+
+    @joined.setter
+    def joined(self, value):
+        self.__joined = value
