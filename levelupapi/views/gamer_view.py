@@ -8,6 +8,9 @@ class GamerView(ViewSet):
     """Handles HTTP requests to /gamers"""
     def list(self, request):
         gamers = Gamer.objects.all()
+        if "user" in request.query_params:
+            gamers = gamers.filter(gamers.user_id == request.auth['user_id'])  
+
         serialized = GamerSerializer(gamers, many=True)
         return Response(serialized.data, status=status.HTTP_200_OK)
 

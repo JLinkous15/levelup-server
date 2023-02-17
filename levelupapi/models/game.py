@@ -8,3 +8,11 @@ class Game(models.Model):
     creator = models.CharField(max_length=50)
     number_of_players = models.IntegerField(default=1)
     skill_level = models.CharField(default="Easy", max_length=8)
+
+    @property
+    def is_host(self):
+        return self.__host
+
+    @is_host.setter
+    def is_host(self, value):
+        self.__host=value
