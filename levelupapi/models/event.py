@@ -13,6 +13,7 @@ class Event(models.Model):
     def is_host(self):
         return self.__host
 
+#Django elephant?
     @is_host.setter
     def is_host(self, value):
         self.__host=value
