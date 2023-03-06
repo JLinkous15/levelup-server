@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'levelupapi',
-    'levelupreports ',
+    'levelupreports',
 ]
 
 # THIS IS NEW

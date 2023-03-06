@@ -3,24 +3,26 @@
         "model": "levelupapi.game",
         "pk": 1,
         "fields": {
-            "name" : "Monopoly",
+            "name": "Monopoly",
             "description": "A great way for your family to learn to hate each other.",
-            "game_type" : 1,
-            "creator" : "Parker Brothers",
-            "number_of_players" : 4,
-            "skill_level" : "Beginner"
+            "game_type": 1,
+            "creator": "Parker Brothers",
+            "number_of_players": 4,
+            "skill_level": "Beginner",
+            "gamer": 1
         }
     },
     {
         "model": "levelupapi.game",
         "pk": 2,
         "fields": {
-            "name" : "Dungeons and Dragons",
+            "name": "Dungeons and Dragons",
             "description": "Do you have 48 hours for a campaign?",
-            "game_type" : 2,
-            "creator" : "Hasbro",
-            "number_of_players" : 8,
-            "skill_level" : "Hard"
+            "game_type": 2,
+            "creator": "Hasbro",
+            "number_of_players": 8,
+            "skill_level": "Hard",
+            "gamer": 1
         }
     }
 ]
